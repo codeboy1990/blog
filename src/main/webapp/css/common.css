@@ -1,0 +1,28 @@
+
+.right-button01, .right-button02, .right-button03, .right-button04, .right-button05, .right-button06, .right-button07, .right-button08{
+	margin-left:5px; 
+	padding:0 8px; 
+	height:24px; 
+	line-height:24px;
+	border:1px solid #999;
+	background:#999 url(../images/btnBg.png) repeat-x;
+}
+
+
+.trBlueBg{background:#ACD6FF;}
+
+
+#popup{display:none; position:absolute; left:35%; top:180px; width:300px; height:auto; padding:8px; background:#dbdbdb; border:1px solid #777; z-index:11111;}
+#popup p{margin:0 0 10px; padding:0;}
+.deTitle{height:30px; line-height:30px;}
+.deTitle b{float:left;}
+.deTitle span.closeBtn{float:right; display:inline-blcok; width:24px; height:24px; line-height:24px; color:#fff; text-align:center; cursor:pointer;}
+.deContent{padding:15px 10px; background:#fff; border:1px solid #999;}
+.okBtn{margin:8px auto 0; text-align:center;}
+.okBtn input{padding:5px 8px;}
+#fullscreen{
+display:none; width:100%; height:100%; position:absolute; left: 0;top: 0;background: #000;
+filter:alpha(opacity=50);
+moz-opacity:0.5;   
+khtml-opacity: 0.5;   
+opacity: 0.5;   z-index: 1000;}

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.blog.web.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.blog.web.entity.User" >
+    <id column="USER_ID" property="userId" jdbcType="INTEGER" />
+    <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+    <result column="NICK_NAME" property="nickName" jdbcType="VARCHAR" />
+    <result column="PASSWORD" property="passWord" jdbcType="VARCHAR" />
+    <result column="CREATETIME" property="createTime" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    USER_ID, USER_NAME, PASSWORD, NICK_NAME, CREATETIME, UPDATETIME
+  </sql>
+
+  <select id="getUserByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+  	select
+  	<include refid="Base_Column_List" />
+    from user 
+    where USER_NAME = #{userName}
+  </select>
+
+
+  <select id="getUserList" resultMap="BaseResultMap" parameterType="com.blog.web.entity.Page">
+  	select
+  	<include refid="Base_Column_List" />
+    from user where 1=1
+<!-- 	   <if test="params.userId != null">
+	  	and user_id like '%${params.userId}%'
+	   </if>
+	   <if test="params.userName != null">
+	   	and user_name like '%${params.userName}%'
+	   </if>
+	   <if test="params.beginTime != null">
+	   	and reg_time >= #{params.beginTime}
+	   </if>
+	   <if test="params.endTime != null">
+	   	and reg_time <![CDATA[ <= ]]> #{params.endTime}
+	   </if> -->
+  </select>
+</mapper>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+			http://www.springframework.org/schema/beans/spring-beans.xsd
+  			http://www.springframework.org/schema/mvc
+			http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       		http://www.springframework.org/schema/context
+       		http://www.springframework.org/schema/context/spring-context.xsd"
+	default-lazy-init="true">
+
+<!-- 	<mvc:default-servlet-handler/> -->
+	<!-- 添加注解驱动 -->
+	<mvc:annotation-driven />
+	<!-- 默认扫描的包路径 -->
+	<context:component-scan base-package="com.blog.web" />
+
+	<!-- 设置不过滤内容，比如:css,jquery,img 等资源文件 -->
+	<mvc:resources location="/*.html" mapping="/**.html" />
+	<mvc:resources location="/css/*" mapping="/css/**" />
+	<mvc:resources location="/js/*" mapping="/js/**" />
+	<mvc:resources location="/images/*" mapping="/images/**" />
+
+	<mvc:view-controller path="/" view-name="index" />
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView"></property>
+		<!-- 配置jsp路径前缀 -->
+		<property name="prefix" value="/"></property>
+		<!-- 配置URl后缀 -->
+		<property name="suffix" value=".jsp"></property>
+	</bean>
+
+	<!-- 实际在本项目中这个app.properties没有用，但是这里提供一种载入配置的方式 -->
+<!-- 	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config/app.properties</value>
+			</list>
+		</property>
+	</bean> -->
+
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<!-- 登录拦截器 -->
+		<bean class="com.blog.web.interceptor.LoginInterceptor">
+			<property name="excludes">
+				<list>
+					<value>/login/.*</value>
+					<value>/common/.*</value>
+				</list>
+			</property>
+		</bean>
+		<!-- 权限拦截器 -->
+		<bean class="com.blog.web.interceptor.PermissionInterceptor">
+			<property name="excludes">
+				<list>
+					<value>/login/.*</value>
+					<value>/common/.*</value>
+					<value>/adminuser/updatepwd</value>
+					<value>/</value>
+				</list>
+			</property>
+		</bean>
+	</mvc:interceptors>
+	
+	<!-- 处理适配器 -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+			<property name="messageConverters">
+				<list>
+					<bean class="com.blog.common.utils.UTF8StringHttpMessageConverter" />
+				</list>
+			</property>
+		</bean>
+</beans>
